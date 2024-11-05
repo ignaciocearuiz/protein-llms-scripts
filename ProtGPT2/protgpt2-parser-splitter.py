@@ -32,15 +32,15 @@ def fastaReader(input_fasta: str):
         # Yields the last sequence
         yield sequence
 
-def outputFastaFiles(train_list, test_list, output_dir):
+def outputFastaFiles(train_list, val_list, output_dir):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     with open(f"{output_dir}/train.txt", 'w') as output_train:
         for seq in train_list:
             output_train.write("<|endoftext|>\n" + seq)
-    with open(f"{output_dir}/test.txt", 'w') as output_test:
-        for seq in test_list:
-            output_test.write("<|endoftext|>\n" + seq)
+    with open(f"{output_dir}/val.txt", 'w') as output_val:
+        for seq in val_list:
+            output_val.write("<|endoftext|>\n" + seq)
 
 def main(args):
     sequences = []
@@ -54,7 +54,7 @@ def main(args):
     train_sequences = []
     rd.seed(args.seed)
 
-    # Al final de este ciclo, sequences tendrá solamente las secuencias destinadas a test.
+    # Al final de este ciclo, sequences tendrá solamente las secuencias destinadas a val.
     for _ in range(train_size):
         rand_index = rd.randint(0, total_seqs-1)
         train_sequences.append(sequences.pop(rand_index))
