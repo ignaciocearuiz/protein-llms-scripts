@@ -1,5 +1,5 @@
 import random as rd
-import sys
+import os
 import argparse
 import logging
 
@@ -33,6 +33,8 @@ def fastaReader(input_fasta: str):
         yield sequence
 
 def outputFastaFiles(train_list, test_list, output_dir):
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
     with open(f"{output_dir}/train.txt", 'w') as output_train:
         for seq in train_list:
             output_train.write("<|endoftext|>\n" + seq)
@@ -41,13 +43,6 @@ def outputFastaFiles(train_list, test_list, output_dir):
             output_test.write("<|endoftext|>\n" + seq)
 
 def main(args):
-    """if len(sys.argv) != 3:
-        print("Usage: python protgpt2-parser-splitter.py <input_fasta> <output_dir>")
-        return"""
-
-    """input_fasta = sys.argv[1]
-    output_dir = sys.argv[2]"""
-
     sequences = []
     for seq in fastaReader(args.input_fasta):
         sequences.append(seq)
@@ -64,9 +59,6 @@ def main(args):
         rand_index = rd.randint(0, total_seqs-1)
         train_sequences.append(sequences.pop(rand_index))
         total_seqs -= 1
-    """print("Secuencias para training:", len(train_sequences))
-    print("Secuencias para testing:", len(sequences))
-    print("Generando archivos FASTA para ProtGPT2 ...")"""
     logger.info(f"Secuencias para entrenamiento: {len(train_sequences)}")
     logger.info(f"Secuencias para validación: {len(sequences)}")
     outputFastaFiles(train_sequences, sequences, args.output_dir)
@@ -79,9 +71,6 @@ if __name__ == "__main__":
     parser.add_argument("--train_ratio", type=float, default=0.9)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
-
-    if args.debug:
-        logger.setLevel(logging.DEBUG)
 
     main(args)
     logger.info("Parseo finalizado.")
