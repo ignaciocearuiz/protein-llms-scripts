@@ -47,7 +47,6 @@ def main(args):
     for seq in fastaReader(args.input_fasta):
         sequences.append(seq)
     total_seqs = len(sequences)
-    #print("Total secuencias:", total_seqs)
     logger.info(f"Total secuencias leídas: {total_seqs}")
 
     train_size = round(len(sequences) * args.train_ratio)
