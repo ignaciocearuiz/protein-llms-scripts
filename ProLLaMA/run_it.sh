@@ -48,4 +48,5 @@ torchrun --nproc_per_node 1 /content/ProLLaMA/scripts/instruction_tune.py \
     --torch_dtype float16 \
     --save_safetensors False \
     --ddp_find_unused_parameters False \
-    --gradient_checkpointing
+    --gradient_checkpointing \
+    --overwrite_output_dir
