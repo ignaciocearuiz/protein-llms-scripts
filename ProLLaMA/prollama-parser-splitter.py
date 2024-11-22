@@ -36,12 +36,15 @@ def fastaReader(input_fasta: str):
 def outputJSONFiles(train_list, test_list, output_dir):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    json_train_data = json.dumps(train_list)
-    json_test_data = json.dumps(test_list)
+    json_train_data = json.dumps(train_list, indent=4)
     with open(f"{output_dir}/train_split.json", 'w') as output_train:
         output_train.write(json_train_data)
-    with open(f"{output_dir}/test_split.json", 'w') as output_test:
-        output_test.write(json_test_data)
+    
+    # Solo genera el archivo JSON si hay secuencias para testeo.
+    if len(test_list) != 0:
+        json_test_data = json.dumps(test_list)
+        with open(f"{output_dir}/test_split.json", 'w') as output_test:
+            output_test.write(json_test_data)
 
 def main(args):
     sequences = []
