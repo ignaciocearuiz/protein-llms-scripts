@@ -2,6 +2,7 @@ import random as rd
 import os
 import argparse
 import logging
+import re
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -22,6 +23,12 @@ def fastaReader(input_fasta: str):
                 else:
                     # This happens every time a new FASTA record is encountered.
                     # Start by yielding the entry that has been built up.
+
+                    # Check if sequence complains to FASTA format, if not, fix it.
+                    pattern = re.compile(r'^(.{60}\n)*.{0,60}\n$')
+                    if not pattern.match(sequence):
+                        sequence = '\n'.join(sequence[i:i+60] for i in range(0, len(sequence), 60))
+
                     yield sequence
 
                     # Then reinitialise the sequence variable to build up a new record.
