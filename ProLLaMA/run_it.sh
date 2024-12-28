@@ -24,7 +24,7 @@ torchrun --nproc_per_node 1 /content/ProLLaMA/scripts/instruction_tune.py \
     --per_device_train_batch_size ${per_device_train_batch_size} \
     --do_train \
     --seed 42 \
-    --fp16 \
+    --bf16 \
     --num_train_epochs 2 \
     --lr_scheduler_type cosine \
     --learning_rate ${lr} \
@@ -46,6 +46,7 @@ torchrun --nproc_per_node 1 /content/ProLLaMA/scripts/instruction_tune.py \
     --trainable ${lora_trainable} \
     --lora_dropout ${lora_dropout} \
     --torch_dtype float16 \
+    --load_in_kbits 16 \
     --save_safetensors False \
     --ddp_find_unused_parameters False \
     --gradient_checkpointing \
