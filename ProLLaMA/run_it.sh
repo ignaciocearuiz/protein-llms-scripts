@@ -1,4 +1,4 @@
-# MODIFIED TO EXECUTE ON GOOGLE COLAB
+# MODIFIED TO EXECUTE ON GOOGLE COLAB ON 1 NVIDIA A100 GPU
 # the codes are based on Chinese-LLaMA-Alpaca-2
 # Read the wiki(https://github.com/ymcui/Chinese-LLaMA-Alpaca-2/wiki/sft_scripts_zh) carefully before running the script
 export CUDA_VISIBLE_DEVICES=0
@@ -11,8 +11,8 @@ lora_dropout=0.05
 
 pretrained_model=GreatCaptainNemo/ProLLaMA_Stage_1 #or your local path
 dataset_dir=/content/ProLLaMA/scripts/instruction_tuning_dataset #your dataset path
-per_device_train_batch_size=144
-gradient_accumulation_steps=4
+per_device_train_batch_size=72
+gradient_accumulation_steps=8
 max_seq_length=256
 output_dir=save_dir/
 deepspeed_config_file=/content/ProLLaMA/scripts/ds_zero2_no_offload.json

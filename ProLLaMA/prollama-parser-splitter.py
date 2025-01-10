@@ -51,7 +51,7 @@ def main(args):
     for seq in fastaReader(args.input_fasta):
         data = dict()
         data["instruction"] = "[Generate by protein family]"
-        data["input"] = f"family=<{args.family_name} family>"
+        data["input"] = f"Family=<{args.family_name} family>"
         data["output"] = f'Seq=<{seq}>'
         sequences.append(data)
 
