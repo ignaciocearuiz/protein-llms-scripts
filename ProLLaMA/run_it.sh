@@ -50,4 +50,5 @@ torchrun --nproc_per_node 1 /content/ProLLaMA/scripts/instruction_tune.py \
     --save_safetensors False \
     --ddp_find_unused_parameters False \
     --gradient_checkpointing \
+    --merge_when_finished True \
     --overwrite_output_dir
